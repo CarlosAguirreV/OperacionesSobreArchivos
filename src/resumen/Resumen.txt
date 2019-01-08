@@ -1,0 +1,64 @@
+*Cuando se mencione "output"(salida de datos) es escritura e "input"(entrada de datos) es lectura.
+
+Flujo de caracteres (char):
+    FileWriter/FileReader (Escribe cadenas enteras y lee caracter a caracter)
+        Termina de leer cuando: se encuentre con el caracter -1.
+        Necesita: File o ruta especificada en cadena.
+        Métodos: FileWriter.write(), FileReader.read(), *.close(), etc.
+
+    BufferedWriter/BufferedReader (Mejora I - Escribe y lee líneas enteras)
+        Termina de leer cuando: se encuentre con un null.
+        Necesita: FileWriter, FileReader y File o ruta especificada en cadena.
+        Métodos: fw.write(), fw.newLine(), fr.readLine(), *.close(), etc.
+        *Al crear un objeto de FileWriter se puede especificar si lo añadirá/append (true) o si lo machacará (false).
+	
+Flujo de bytes (binario):
+    FileOutputStream/FileInputStream (Permite escribir y leer bytes en binario)
+        Termina de leer cuando: encuentre el valor -1.
+        Necesita: File o ruta especificada en cadena.
+        Métodos: fos.write(), fis.read().
+        *ATENCIÓN: solo almacena bytes, no otros tipos primitivos como char.
+
+    DataOutputStream/DataInputStream (Mejora I - Permite escribir y leer tipos primitivos en secuencias de bytes)
+        Termina de leer cuando: salta la excepción EOFException.
+        Necesita: FileOutputStream, FileInputStream y File o ruta especificada en cadena.
+        Métodos: dos.writeUTF(cadena), dos.writeByte(byte), dis.readUTF(), dis.readByte(), etc.
+
+    ObjectOutputStream/ObjectInputStream (Mejora II - Escribir y leer objetos Java)
+        Termina de leer cuando: salta la excepción EOFException.
+        Necesita: una clase que implemente Serializable, FileOutputStream, FileInputStream y File o ruta especificada en cadena.
+        Métodos: oos.write(objetoConSerializable), ois.readObject().
+
+    RandomAccessFile (Mejora III - Permite escribir y leer datos en registros que ocupan una determinada cantidad de bytes)
+        Termina de leer cuando: en un bucle for el indiceRegistro > lectorArchRand.length() / tamañoEnBytesDelRegistro o bien cuando raf.getFilePointer() == raf.length().
+        Necesita: File o ruta especificada en cadena.
+        Métodos: raf.seek(bytesPosicion)[*PUNTERO*], raf.writeInt(int), raf.writeChars(), raf.readInt(), raf.readChar(), etc.
+        *Recuerda: int - 4 bytes, char - 2 bytes, char unicode - 1 byte.
+        *Hay que especificar si lee "r" o si escribe "rw" al crear un objeto RandomAccessFile.
+
+Ficheros XML:
+    DOM (Permite crear una estructura, transformarla en XML y leer el archivo XML)
+        Termina de leer cuando: indice > nodosAsignaturas.getLength().
+        Necesita: DocumentBuilderFactory + DocumentBuilder + Document.
+        Necesita bastantes métodos, entre ellos uno creado para añadir elementos de forma rápida.
+        *ATENCIÓN: no necesita etiquetas especiales como es el caso de JAXB.
+
+    JAXB (Mejora I - Permite escribir y leer objetosRaiz[que contienen varios objetos] en archivos XML)
+        Necesita I: JAXBContext  +  Marshaller + File[para escribir], Unmarshaller + FileReader + File[para leer].
+        Necesita II: Clase raíz @XmlRootElement con un metodo get para el ArrayList con la cabecera @XmlElementWrapper y @XmlElement.
+        Necesita III: Clase nodo con la cabecera @XmlType.
+        Metodos comunes: jaxbcontexto.newInstance(claseRaiz.class)[por eso el constructor vacio].
+        Métodos escribir: jaxbcontexto.createMarshaller(), mrsll.setProperty(formato, Boolean.TRUE)[salida formateada], mrsll.marshal(objetoRaíz, archivo)[escribir].
+        Metodos leer: jaxbcontexto.createUnmarshaller(), unmsll.unmarshal(new FileReader(archivo))[leer].
+        *OBLIGATORIO: las clases POJO han de tener un constructor vacío y otro lleno.
+
+Patrón MVC (Modelo Vista Controlador):
+    Modelo - Controla los datos, trata de proteger su integridad y les da forma.
+    Vista - Solo muestra y devuelve datos (es tonta).
+    Controlador - La vista llama al controlador, este le pide los datos y se los da al modelo para que los trate.
+
+Patrón DAO (Data Access Object):
+    Se compone de:
+        Interfaz - Esta ha de tener las operaciones que se pueden realizar en un objeto DAO.
+        Clase + Interfaz - Clase que implemente la interfaz anterior.
+        Objeto DAO - Una clase POJO.

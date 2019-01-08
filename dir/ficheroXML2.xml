@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Modulo>
+    <listaAsignaturas>
+        <asignatura>
+            <codigo>1</codigo>
+            <contenido>Gramatica y vocabulario</contenido>
+            <descripcion>Se estudia lengua castellana</descripcion>
+            <horas>12</horas>
+            <nombre>Lenguage</nombre>
+            <precio>12.3</precio>
+        </asignatura>
+        <asignatura>
+            <codigo>2</codigo>
+            <contenido>Algebra, y otros</contenido>
+            <descripcion>Una asignatura de cuidado</descripcion>
+            <horas>90</horas>
+            <nombre>Matemáticas</nombre>
+            <precio>12.9</precio>
+        </asignatura>
+    </listaAsignaturas>
+</Modulo>
